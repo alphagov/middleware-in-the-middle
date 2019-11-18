@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "supervisor -s -e 'node,js,ejs,scss' -- ./bin/www"
+    "start": "DEBUG='exp:*' supervisor -s -e 'node,js,ejs,scss' -- ./bin/www",
+    "idp": "MODE=IDP DEBUG='exp:*' supervisor -s -e 'node,js,ejs,scss' -- ./bin/www",
+    "broker": "MODE=Broker DEBUG='exp:*' supervisor -s -e 'node,js,ejs,scss' -- ./bin/www",
+    "expected": "DEBUG='exp:*' node ./bin/www",
+    "orig": "node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

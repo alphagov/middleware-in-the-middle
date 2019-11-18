@@ -6,6 +6,8 @@ var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
 
 var indexRouter = require('./routes/index');
+var handlerRouter = require('./routes/handler');
+var senderRouter = require('./routes/sender');
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -25,9 +27,22 @@ app.use(sassMiddleware({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use((req, res, next) => {
+  // if (!req.client.authorized) {
+  //   return res.status(401).send('Invalid client certificate authentication.');
+  // }
+  if (req.client.authorized) {
+    console.log('Middlewaring for a request that has authenticated');
+  } else {
+    console.log('Middlewaring for a request without mutual auth');
+  }
+  return next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/handle', handlerRouter);
+app.use('/sender', senderRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
