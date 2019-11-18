@@ -1,11 +1,11 @@
 const https = require('https');
 var state = require('./state');
 
-module.exports = (cb) => {
+module.exports = (target, cb) => {
     console.log('Sending');
     let req = https.request(
         {
-            hostname: state.TARGET_HOST_NAME,
+            hostname: decodeURIComponent(target),
             port: state.TARGET_PORT,
             path: '/handle',
             method: 'GET',

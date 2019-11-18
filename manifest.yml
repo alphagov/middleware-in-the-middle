@@ -1,0 +1,5 @@
+---
+applications:
+- name: idp-node-prototype
+  buildpack: nodejs_buildpack
+  command: npm start
