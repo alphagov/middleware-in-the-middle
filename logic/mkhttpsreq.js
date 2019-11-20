@@ -1,17 +1,20 @@
 const https = require('https');
 var state = require('./state');
 
-module.exports = (target, cb) => {
-    console.log('Sending');
+module.exports = (headers, cb) => {
+    console.log('Sending HTTPS REQ');
+    
     let req = https.request(
         {
-            hostname: decodeURIComponent(target),
+            hostname: decodeURIComponent(state.IDP_MIDDLEWARE_URI),
             port: state.TARGET_PORT,
-            path: '/handle',
-            method: 'GET',
+            path: '/sender',
+            method: 'POST',
             cert: state.CERT,
             key: state.KEY,
-            ca: state.CA
+            ca: state.CA,
+            checkServerIdentity: false,
+            body: headers
         },
         res => {
             res.on('data', function(data) {
