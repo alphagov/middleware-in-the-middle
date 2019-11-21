@@ -1,6 +1,5 @@
 var express = require('express');
 const mkreq = require('../logic/mkreq');
-var state = require('../logic/state');
 
 let router = express.Router();
 router.post('/', function(req, res, next) {

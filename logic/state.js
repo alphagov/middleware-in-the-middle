@@ -18,7 +18,7 @@ TARGET_PORTS = {
     broker: 443, // targeting the other middleware
     idp: 5510, // targeting the IDP core app
 };
-TARGET_PATH = {
+TARGET_PATHS = {
     broker: '/sender',
     idp: '/token',
 };
