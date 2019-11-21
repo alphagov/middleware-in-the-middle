@@ -1,6 +1,5 @@
 var express = require('express');
-const mkhttpsreq = require('../logic/mkhttpsreq');
-const mkhttpreq = require('../logic/mkhttpreq');
+const mkreq = require('../logic/mkreq');
 var state = require('../logic/state');
 
 let router = express.Router();
@@ -18,14 +17,14 @@ router.post('/', function(req, res, next) {
 
   if (state.MODE == 'broker') {
     console.log('Sending HTTPS request with body: ' + postData);
-    mkhttpsreq(postData, (data) => {
+    mkreq(postData, (data) => {
       console.log('Response data' + data)
       res.setHeader('Content-Type', 'application/json')
       res.send(data);
     });
   } else if (state.MODE == 'idp') {
     console.log('Sending HTTP request with body: ' + postData);
-    mkhttpreq(postData, (data) => {
+    mkreq(postData, (data) => {
       console.log('Response data' + data)
       res.send(data);
     });
