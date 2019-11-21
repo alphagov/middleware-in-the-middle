@@ -22,23 +22,14 @@ app.set('port', port);
  */
 console.log(`Starting server in '${state.MODE}' mode`)
 
-if (state.MODE == 'broker') {
-  var server = http.createServer({
-    cert: state.CERT,
-    key: state.KEY,
-    requestCert: true,
-    rejectUnauthorized: false,
-    ca: state.CA,
-  }, app).listen(port);
-} else if (state.MODE == 'idp') {
-  var server = https.createServer({
-    cert: state.CERT,
-    key: state.KEY,
-    requestCert: true,
-    rejectUnauthorized: false,
-    ca: state.CA,
-  }, app).listen(port);
-}
+let http_module = state.use_https() ? https : http;
+var server = http_module.createServer({
+  cert: state.CERT,
+  key: state.KEY,
+  requestCert: true,
+  rejectUnauthorized: false,
+  ca: state.CA,
+}, app).listen(port);
 
 
 // var server = http.createServer(app);
