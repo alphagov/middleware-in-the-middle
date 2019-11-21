@@ -15,20 +15,11 @@ router.post('/', function(req, res, next) {
       postData += `${encodeURIComponent(key)}=${encodeURIComponent(req.body[key])}`;
   }
 
-  if (state.MODE == 'broker') {
-    console.log('Sending HTTPS request with body: ' + postData);
-    mkreq(postData, (data) => {
-      console.log('Response data' + data)
-      res.setHeader('Content-Type', 'application/json')
-      res.send(data);
-    });
-  } else if (state.MODE == 'idp') {
-    console.log('Sending HTTP request with body: ' + postData);
-    mkreq(postData, (data) => {
-      console.log('Response data' + data)
-      res.send(data);
-    });
-  }
+  mkreq(postData, (data) => {
+    console.log('Response data' + data)
+    res.setHeader('Content-Type', 'application/json')
+    res.send(data);
+  });
 });
 
 module.exports = router;

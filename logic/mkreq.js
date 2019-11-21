@@ -2,8 +2,8 @@ const http = require('http');
 const https = require('https');
 const state = require('./state');
 
-module.exports = (requestBody, cb) => {
-    console.log(`Sending HTTP${state.use_https() ? 'S' : ''} REQ`);
+module.exports = (requestBody, responseCallback) => {
+    console.log(`Sending HTTP${state.use_https() ? 'S' : ''} Request with body: ${requestBody}`);
     let options = {
         hostname: decodeURIComponent(state.TARGET_URL),
         port: state.TARGET_PORT,
@@ -25,18 +25,13 @@ module.exports = (requestBody, cb) => {
     }
 
     let http_module = state.use_https() ? https : http;
-    let req = http_module.request(
-        options,
-        res => {
-            res.on('data', function(data) {
-                // do something with response
-                console.log('Received data:\n' + data);
-                if (cb) {
-                    cb(data);
-                }
-            });
+    let responseHandler = () => {};
+    if (responseCallback) {
+        responseHandler = (res) => {
+            res.on('data', responseCallback);
         }
-    );
+    }
+    let req = http_module.request(options, responseHandler);
     req.on('error', (e) => {
         console.error(e);
       });
