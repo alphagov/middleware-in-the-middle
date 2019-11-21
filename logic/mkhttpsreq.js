@@ -1,16 +1,8 @@
 const https = require('https');
 var state = require('./state');
 
-module.exports = (headers, cb) => {
+module.exports = (requestBody, cb) => {
     console.log('Sending HTTPS REQ');
-    console.log('HEADERS' + JSON.stringify(headers.body));
-    let headerJson = '';
-    for (let key of Object.keys(headers.body)) {
-        if (headerJson.length > 0) {
-            headerJson += '&';
-        }
-        headerJson += `${encodeURIComponent(key)}=${encodeURIComponent(headers.body[key])}`;
-    }
     let req = https.request(
         {
             hostname: decodeURIComponent(state.IDP_MIDDLEWARE_URI),
@@ -25,7 +17,7 @@ module.exports = (headers, cb) => {
             },
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Content-Length': Buffer.byteLength(headerJson)
+                'Content-Length': Buffer.byteLength(requestBody)
               }
         },
         res => {
@@ -41,6 +33,6 @@ module.exports = (headers, cb) => {
     req.on('error', (e) => {
         console.error(e);
       });
-    req.write(headerJson);
+    req.write(requestBody);
     req.end();
 }

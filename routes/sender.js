@@ -8,21 +8,27 @@ router.post('/', function(req, res, next) {
   // target parameter expects the target domain (and potentially path, though that is untested) as a URL-encoded string
   console.log('handling sender');
 
-  console.log(JSON.stringify(req.body))
+  let postData = '';
+  for (let key of Object.keys(req.body)) {
+      if (postData.length > 0) {
+          postData += '&';
+      }
+      postData += `${encodeURIComponent(key)}=${encodeURIComponent(req.body[key])}`;
+  }
 
   if (state.MODE == 'broker') {
-    mkhttpsreq(req, (data) => {
+    console.log('Sending HTTPS request with body: ' + postData);
+    mkhttpsreq(postData, (data) => {
       console.log('Response data' + data)
       res.setHeader('Content-Type', 'application/json')
       res.send(data);
     });
-    return;
   } else if (state.MODE == 'idp') {
-    mkhttpreq(req,(data) => {
+    console.log('Sending HTTP request with body: ' + postData);
+    mkhttpreq(postData, (data) => {
       console.log('Response data' + data)
       res.send(data);
     });
-    return;
   }
 });
 
