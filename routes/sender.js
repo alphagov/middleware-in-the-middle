@@ -11,15 +11,19 @@ router.post('/', function(req, res, next) {
   console.log(JSON.stringify(req.body))
 
   if (state.MODE == 'broker') {
-    mkhttpsreq(req.body, (data) => {
-      res.render('test', { stuff: data });
+    mkhttpsreq(req, (data) => {
+      console.log('Response data' + data)
+      res.setHeader('Content-Type', 'application/json')
+      res.send(data);
     });
+    return;
   } else if (state.MODE == 'idp') {
-    mkhttpreq(req.body,(data) => {
-      res.render('test', { stuff: data });
+    mkhttpreq(req,(data) => {
+      console.log('Response data' + data)
+      res.send(data);
     });
+    return;
   }
-   throw Error("State does not equal idp or broker. State is: " + state.mode);
 });
 
 module.exports = router;
