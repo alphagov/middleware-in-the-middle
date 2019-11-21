@@ -16,5 +16,5 @@ module.exports.KEY = KEY;
 module.exports.CA = CA;
 module.exports.TARGET_PORT = 443;
 module.exports.IDP_TARGET_PORT = 5510;
-module.exports.IDP_URI = 'http://localhost';
-module.exports.IDP_MIDDLEWARE_URI = 'https://localhost'
+module.exports.IDP_URI = 'localhost';
+module.exports.IDP_MIDDLEWARE_URI = 'localhost'

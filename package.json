@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "DEBUG='exp:*' node ./bin/www",
-    "watch": "DEBUG='exp:*' supervisor -s -e 'node,js,ejs,scss' -- ./bin/www",
-    "idp": "MODE=IDP DEBUG='exp:*' supervisor -s -e 'node,js,ejs,scss' -- ./bin/www",
+    "start": "DEBUG='exp:*,tls,https' node ./bin/www",
+    "watch": "DEBUG='exp:*,tls,https' supervisor -s -e 'node,js,ejs,scss' -- ./bin/www",
+    "idp": "MODE=IDP DEBUG='exp:*,tls,https' supervisor -s -e 'node,js,ejs,scss' -- ./bin/www",
     "broker": "MODE=Broker DEBUG='exp:*' supervisor -s -e 'node,js,ejs,scss' -- ./bin/www",
     "orig": "node ./bin/www"
   },
