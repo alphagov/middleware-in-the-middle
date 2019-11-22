@@ -11,8 +11,8 @@ KEY = fs.readFileSync(`${MODE}.key`);
 CA = fs.readFileSync(`ca.crt`);
 
 TARGET_URLS = {
-    broker: 'localhost',
-    idp: 'localhost',
+    broker: process.env.BROKER_URL || 'localhost',
+    idp: process.env.IDP_URL || 'localhost',
 };
 TARGET_PORTS = {
     broker: 443, // targeting the other middleware
