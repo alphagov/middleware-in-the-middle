@@ -30,4 +30,5 @@ module.exports.CA = CA;
 module.exports.TARGET_PORT = TARGET_PORTS[MODE];
 module.exports.TARGET_URL = TARGET_URLS[MODE];
 module.exports.TARGET_PATH = TARGET_PATHS[MODE];
-module.exports.use_https = function() { return MODE == MODES.broker; };
+module.exports.send_https = function() { return MODE == MODES.broker; };
+module.exports.receive_https = function() { return MODE == MODES.idp; };

@@ -22,7 +22,7 @@ app.set('port', port);
  */
 console.log(`Starting server in '${state.MODE}' mode`)
 
-let http_module = state.use_https() ? https : http;
+let http_module = state.receive_https() ? https : http;
 var server = http_module.createServer({
   cert: state.CERT,
   key: state.KEY,

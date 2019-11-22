@@ -3,7 +3,7 @@ const https = require('https');
 const state = require('./state');
 
 module.exports = (requestBody, responseCallback) => {
-    console.log(`Sending HTTP${state.use_https() ? 'S' : ''} Request with body: ${requestBody}`);
+    console.log(`Sending HTTP${state.send_https() ? 'S' : ''} Request with body: ${requestBody}`);
     let options = {
         hostname: decodeURIComponent(state.TARGET_URL),
         port: state.TARGET_PORT,
@@ -15,7 +15,7 @@ module.exports = (requestBody, responseCallback) => {
             'Content-Length': Buffer.byteLength(requestBody)
         },
     };
-    if (state.use_https()) {
+    if (state.send_https()) {
         options.cert = state.CERT;
         options.key = state.KEY;
         options.ca = state.CA;
@@ -24,7 +24,7 @@ module.exports = (requestBody, responseCallback) => {
         };
     }
 
-    let http_module = state.use_https() ? https : http;
+    let http_module = state.send_https() ? https : http;
     let responseHandler = () => {};
     if (responseCallback) {
         responseHandler = (res) => {
