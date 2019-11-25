@@ -15,7 +15,7 @@ TARGET_URLS = {
     idp: process.env.IDP_URL || 'stub-oidc-op.cloudapps.digital',
 };
 TARGET_PORTS = {
-    broker: 3000, // targeting the other middleware
+    broker: process.env.BROKER_PORT || 3000, // targeting the other middleware
     idp: process.env.IDP_PORT || 443, // targeting the IDP core app
 };
 TARGET_PATHS = {
