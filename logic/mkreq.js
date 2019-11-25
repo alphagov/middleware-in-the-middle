@@ -9,13 +9,12 @@ module.exports = (requestBody, responseCallback) => {
         port: state.TARGET_PORT,
         path: state.TARGET_PATH,
         method: 'POST',
-        checkServerIdentity: false,
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Content-Length': Buffer.byteLength(requestBody)
         },
     };
-    if (state.send_https()) {
+    if (state.MODE == 'broker') {
         options.cert = state.CERT;
         options.key = state.KEY;
         options.ca = state.CA;
@@ -29,8 +28,11 @@ module.exports = (requestBody, responseCallback) => {
     if (responseCallback) {
         responseHandler = (res) => {
             res.on('data', responseCallback);
+            console.log('statusCode', res.statusCode);
+            console.log('headers', res.headers);
         }
     }
+
     let req = http_module.request(options, responseHandler);
     req.on('error', (e) => {
         console.error(e);
