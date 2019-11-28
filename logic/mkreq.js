@@ -2,15 +2,15 @@ const http = require('http');
 const https = require('https');
 const state = require('./state');
 
-module.exports = (requestBody, responseCallback) => {
-    console.log(`Sending HTTP${state.send_https() ? 'S' : ''} Request with body: ${requestBody}`);
+module.exports = (requestBody, contentType, targetPath, responseCallback) => {
+    console.log(`Sending HTTP${state.send_https() ? 'S' : ''} Request to ${targetPath} with body: ${requestBody}`);
     let options = {
         hostname: decodeURIComponent(state.TARGET_URL),
         port: state.TARGET_PORT,
-        path: state.TARGET_PATH,
+        path: targetPath,
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': contentType,
             'Content-Length': Buffer.byteLength(requestBody)
         },
     };

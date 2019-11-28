@@ -1,5 +1,6 @@
 var express = require('express');
 const mkreq = require('../logic/mkreq');
+const state = require('../logic/state');
 
 let router = express.Router();
 router.post('/', function(req, res, next) {
@@ -14,7 +15,7 @@ router.post('/', function(req, res, next) {
       postData += `${encodeURIComponent(key)}=${encodeURIComponent(req.body[key])}`;
   }
 
-  mkreq(postData, (data) => {
+  mkreq(postData, 'application/x-www-form-urlencoded', state.TARGET_PATH, (data) => {
     console.log('Response data' + data)
     res.setHeader('Content-Type', 'application/json')
     res.send(data);
