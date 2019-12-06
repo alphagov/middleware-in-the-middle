@@ -3,7 +3,7 @@ const https = require('https');
 const state = require('./state');
 
 module.exports = (requestBody, contentType, targetPath, responseCallback) => {
-    console.log(`Sending HTTP${state.send_https() ? 'S' : ''} Request to ${targetPath} with body: ${requestBody}`);
+    console.log(`Sending HTTP${state.send_https() ? 'S' : ''} Request to ${state.TARGET_URL}:${state.TARGET_PORT}${targetPath} with body: ${requestBody}`);
     let options = {
         hostname: decodeURIComponent(state.TARGET_URL),
         port: state.TARGET_PORT,
