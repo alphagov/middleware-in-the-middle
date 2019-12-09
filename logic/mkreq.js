@@ -2,8 +2,8 @@ const http = require('http');
 const https = require('https');
 const state = require('./state');
 
-module.exports = (requestBody, contentType, targetPath, responseCallback) => {
-    let hostname = state.MODE == 'idp' ? removeHttps(decodeURIComponent(JSON.parse(requestBody)['destination-url'])) : decodeURIComponent(state.TARGET_URL)
+module.exports = (requestBody, contentType, hostname, targetPath, responseCallback) => {
+    hostname = removeHttps(hostname);
     console.log(`Sending HTTP${state.send_https() ? 'S' : ''} Request to ${hostname}:${state.TARGET_PORT}${targetPath} with body: ${requestBody}`);
     let options = {
         hostname: hostname,

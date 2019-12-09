@@ -15,7 +15,10 @@ router.post('/', function(req, res, next) {
       postData += `${encodeURIComponent(key)}=${encodeURIComponent(req.body[key])}`;
   }
 
-  mkreq(postData, 'application/x-www-form-urlencoded', state.TARGET_PATH, (data) => {
+  // The postData above will still have the destination-url in, even when we don't need it any more
+  let hostname = state.MODE == 'idp' ? decodeURIComponent(req.body['destination-url']) : decodeURIComponent(state.TARGET_URL);
+
+  mkreq(postData, 'application/x-www-form-urlencoded', hostname, state.TARGET_PATH, (data) => {
     console.log('Response data' + data)
     res.setHeader('Content-Type', 'application/json')
     res.send(data);
