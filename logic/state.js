@@ -23,6 +23,19 @@ TARGET_PATHS = {
     idp: '/token',
 };
 
+function checkForFalseEnvVar(str) {
+    if (typeof str == 'undefined') {
+        return false;
+    }
+    if (!str) {
+        return false;
+    }
+    if (str.toLowerCase() == 'false') {
+        return false;
+    }
+    return true;
+}
+
 module.exports.MODE = MODE;
 module.exports.CERT = CERT;
 module.exports.KEY = KEY;
@@ -30,5 +43,5 @@ module.exports.CA = CA;
 module.exports.TARGET_PORT = TARGET_PORTS[MODE];
 module.exports.TARGET_URL = TARGET_URLS[MODE];
 module.exports.TARGET_PATH = TARGET_PATHS[MODE];
-module.exports.send_https = function() { return MODE == MODES.broker || !process.env.LOCAL; };
+module.exports.send_https = function() { return MODE == MODES.broker || !checkForFalseEnvVar(process.env.LOCAL); };
 module.exports.receive_https = function() { return MODE == MODES.idp; };
