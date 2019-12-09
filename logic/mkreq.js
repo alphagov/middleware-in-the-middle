@@ -3,7 +3,7 @@ const https = require('https');
 const state = require('./state');
 
 module.exports = (requestBody, contentType, targetPath, responseCallback) => {
-    let hostname = state.MODE == 'idp' ? decodeURIComponent(JSON.parse(requestBody)['destination-url']) : decodeURIComponent(state.TARGET_URL)
+    let hostname = state.MODE == 'idp' ? removeHttps(decodeURIComponent(JSON.parse(requestBody)['destination-url'])) : decodeURIComponent(state.TARGET_URL)
     console.log(`Sending HTTP${state.send_https() ? 'S' : ''} Request to ${hostname}:${state.TARGET_PORT}${targetPath} with body: ${requestBody}`);
     let options = {
         hostname: hostname,
@@ -40,4 +40,8 @@ module.exports = (requestBody, contentType, targetPath, responseCallback) => {
       });
     req.write(requestBody);
     req.end();
+}
+
+function removeHttps(hostname) {
+    return hostname.replace(/^https?:\/\//, '');
 }
