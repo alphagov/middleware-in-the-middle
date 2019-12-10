@@ -2,12 +2,12 @@ const http = require('http');
 const https = require('https');
 const state = require('./state');
 
-module.exports = (requestBody, contentType, hostname, targetPath, responseCallback) => {
+module.exports = (requestBody, contentType, hostname, port, targetPath, responseCallback) => {
     hostname = removeHttps(hostname);
-    console.log(`Sending HTTP${state.send_https() ? 'S' : ''} Request to ${hostname}:${state.TARGET_PORT}${targetPath} with body: ${requestBody}`);
+    console.log(`Sending HTTP${state.send_https() ? 'S' : ''} Request to ${hostname}:${port}${targetPath} with body: ${requestBody}`);
     let options = {
         hostname: hostname,
-        port: state.TARGET_PORT,
+        port: port,
         path: targetPath,
         method: 'POST',
         headers: {

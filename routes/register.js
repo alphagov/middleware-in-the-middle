@@ -9,8 +9,19 @@ router.post('/', function(req, res, next) {
   console.log('handling registation request');
 
   let hostname = state.MODE == 'idp' ? decodeURIComponent(req.body['destination-url']) : decodeURIComponent(state.TARGET_URL);
+  hostname = hostname.replace(/(^\w+:|^)\/\//, '');
 
-  mkreq(JSON.stringify(req.body), 'application/json', hostname, '/register', (data) => {
+
+  let portIndex = hostname.indexOf(':');
+  let port;
+  if (portIndex >= 0) {
+    port = hostname.substring(portIndex + 1);
+    hostname = hostname.substring(0, portIndex);
+  } else {
+    port = state.TARGET_PORT;
+  }
+
+  mkreq(JSON.stringify(req.body), 'application/json', hostname, port, '/register', (data) => {
     console.log('Response data' + data)
     res.setHeader('Content-Type', 'application/json')
     res.send(data);
