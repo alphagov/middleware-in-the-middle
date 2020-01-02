@@ -7,8 +7,8 @@
     "watch": "DEBUG='exp:*,tls,https' supervisor -s -e 'node,js,ejs,scss' -- ./bin/www",
     "idp": "MODE=IDP DEBUG='exp:*,tls,https' supervisor -s -e 'node,js,ejs,scss' -- ./bin/www",
     "broker": "MODE=Broker DEBUG='exp:*' supervisor -s -e 'node,js,ejs,scss' -- ./bin/www",
-    "local-initiator": "MODE=Broker PORT=3001 BROKER_URL=localhost BROKER_PORT=443 DEBUG='exp:*' supervisor -s -e 'node,js,ejs,scss' -- ./bin/www",
-    "local-receiver": "MODE=IDP PORT=443 LOCAL=true DEBUG='exp:*,tls,https' supervisor -s -e 'node,js,ejs,scss' -- ./bin/www",
+    "local-initiator": "MODE=Broker PORT=3001 BROKER_URL=localhost BROKER_PORT=443 DEBUG='exp:*' node ./bin/www & echo $! > ./tmp/pids/local-initiator.pid",
+    "local-receiver": "MODE=IDP PORT=443 LOCAL=true DEBUG='exp:*,tls,https' node ./bin/www & echo $! > ./tmp/pids/local-receiver.pid",
     "orig": "node ./bin/www"
   },
   "engines": {
