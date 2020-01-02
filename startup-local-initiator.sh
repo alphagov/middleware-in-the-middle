@@ -8,5 +8,6 @@ if [ ! -d $PID_DIR ]; then
     mkdir -p $PID_DIR
 fi 
 
+npm install
 npm run-script local-initiator 
 
