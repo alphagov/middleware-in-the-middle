@@ -2,8 +2,8 @@
 
 Node middleware for enforcing mutual TLS.
 
-Currently, two instances of this are sitting between OIDC clients to enforce mutual authentication (in the application layer) over the token endpoint.
-The Broker is the OIDC client, the IDP is the OP.
+Currently, two instances of this are sitting between OIDC clients to enforce mutual authentication (in the application layer) over the token and registration endpoints.
+One Broker will act as the OIDC client, the other Broker will act as the OP.
 
 ## Configuration
 
@@ -33,6 +33,13 @@ TLS requires 3 files in the root of the project:
 This is configured in [state.js](/logic/state.js).
 
 ## Run As A Service
+
+### Prerequisites
+* Node
+
+### Starting the app
+The Middleware can be started independently by running the `startup-local-initiator.sh` and `startup-local-receiver.sh`. Alternatively they can be started together with the rest of the Trust Framework Prototype applications using the [start-all-services.sh](https://github.com/alphagov/stub-oidc-broker/blob/master/start-all-services.sh) in the Stub OIDC Broker repository.
+
 
 There is a helper script to automate some of the configuration required to run this server as a systemd service.
 Run:
@@ -87,3 +94,12 @@ In particular, this uses:
 
 - EJS as a view engine
 - SASS for stylesheets
+
+### Middleware runs on AWS Lightsail 
+* To deploy the Middleware to Lightsail, log into AWS console and switch to the Dev account. 
+* Go to Lightsail and you'll see the idp-middleware and broker-middleware. 
+* SSH into which one is required and pull the latest changes from git. Then follow the commands above to restart the service. 
+
+## License
+
+[MIT](https://github.com/alphagov/middleware-in-the-middle/blob/master/LICENCE)
